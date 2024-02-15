@@ -1,22 +1,26 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Root from "./components/Root";
 import Question from "./components/Question";
 import { View, Text, StyleSheet } from "react-native";
 
 export default function App() {
+  const [questionId, setQuestionId] = useState("");
+
+  useEffect(() => {
+    let url = window.location.href;
+    let split = url.split("?q=");
+
+    let qId = split.length > 1 ? split[1] : null;
+    setQuestionId(qId);
+  }, []);
+
   return (
     <View style={{ height: "100vh" }}>
       <React.StrictMode>
         <View style={styles.container}>
           <Text style={styles.title}>ΤΟ ΜΕΓΑΛΟ ΜΟΥ ΠΡΟΤΖΕΚΤ</Text>
           <View style={styles.content}>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Root />} />
-                <Route path="*" element={<Question />} />
-              </Routes>
-            </BrowserRouter>
+          { questionId ? <Question questionId={questionId}/> : <Root />}
           </View>
         </View>
         <View style={{ height: "10%" }}></View>

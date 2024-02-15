@@ -1,15 +1,7 @@
-import { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { questions } from "../config/questions";
 
-export default function Question() {
-  const [questionId, setQuestionId] = useState(0);
-
-  useEffect(() => {
-    let url = window.location.href;
-    let split = url.split("/");
-    setQuestionId(split[split.length - 1]);
-  }, []);
+export default function Question({questionId}) {
 
   function getQuestion() {
     return questions[questionId] || "No question";
